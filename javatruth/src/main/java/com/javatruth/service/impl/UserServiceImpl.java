@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.common.persistence.page.Page;
 import com.javatruth.dao.IUserDao;
 import com.javatruth.entity.User;
 import com.javatruth.service.IUserService;
@@ -42,4 +43,12 @@ public class UserServiceImpl implements IUserService {
 		return userDao.updateByPrimaryKey(record);
 	}
 
+	public Page<User> fingPage(Page<User> page, User user) {
+		// 设置分页参数
+		user.setPage(page);
+		// 执行分页查询
+		page.setList(userDao.findList(user));
+		return page;
+	}
+	
 }

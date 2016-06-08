@@ -209,5 +209,63 @@
       upate_time = #{upateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
- 
+ 	 <select id="findList" parameterType="com.javatruth.entity.User" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where 1=1 
+    
+     <if test="userName != null">
+       and user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+      <if test="nickName != null">
+        and nick_name = #{nickName,jdbcType=VARCHAR}
+      </if>
+      <if test="userPwd != null">
+        and user_pwd = #{userPwd,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="email != null">
+        and email = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test="mobile != null">
+        and mobile = #{mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="userType != null">
+        and user_type = #{userType,jdbcType=INTEGER}
+      </if>
+      <if test="headImg != null">
+        and head_img = #{headImg,jdbcType=VARCHAR}
+      </if>
+      <if test="sex != null">
+        and sex = #{sex,jdbcType=INTEGER}
+      </if>
+      <if test="createTime != null">
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="lastLogin != null">
+        and last_login = #{lastLogin,jdbcType=TIMESTAMP}
+      </if>
+      <if test="lastIp != null">
+        and last_ip = #{lastIp,jdbcType=VARCHAR}
+      </if>
+      <if test="loginNum != null">
+        and login_num = #{loginNum,jdbcType=INTEGER}
+      </if>
+      <if test="upateTime != null">
+        and upate_time = #{upateTime,jdbcType=TIMESTAMP}
+      </if>
+    	
+    <choose>
+		<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+			ORDER BY ${page.orderBy}
+		</when>
+		<otherwise>
+			ORDER BY create_time 
+		</otherwise>
+	</choose>
+    
+  </select>
 </mapper>

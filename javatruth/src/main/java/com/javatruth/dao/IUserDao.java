@@ -1,5 +1,7 @@
 package com.javatruth.dao;
 
+import java.util.List;
+
 import com.javatruth.entity.User;
 
 public interface IUserDao {
@@ -14,4 +16,6 @@ public interface IUserDao {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+	List<User> findList(User user);
 }

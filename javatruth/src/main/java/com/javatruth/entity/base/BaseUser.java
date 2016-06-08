@@ -1,9 +1,11 @@
 package com.javatruth.entity.base;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class BaseUser implements Serializable{
+import com.common.persistence.bean.BaseEntity;
+import com.javatruth.entity.User;
+
+public class BaseUser extends BaseEntity<User> {
     /**
 	 * 
 	 */
@@ -166,7 +168,6 @@ public class BaseUser implements Serializable{
 				+ ", headImg=" + headImg + ", sex=" + sex + ", createTime=" + createTime + ", lastLogin=" + lastLogin
 				+ ", lastIp=" + lastIp + ", loginNum=" + loginNum + ", upateTime=" + upateTime + "]";
 	}
-    
-    
-    
+
+
 }

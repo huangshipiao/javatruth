@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.common.config.Global;
+import com.common.persistence.page.Page;
 import com.common.utils.DateTimeUtils;
 import com.common.utils.ResponseUtils;
 import com.common.web.AjaxResult;
@@ -25,7 +26,7 @@ public class TestAct {
 	private IUserService userService;
 	
 	@RequestMapping("/test.html")
-	public String toTest(HttpServletRequest request,Model model){
+	public String toTest(HttpServletRequest request,HttpServletResponse response,Model model){
 		
 		User user =new User();
 		/*try{
@@ -35,7 +36,11 @@ public class TestAct {
 			e.printStackTrace();
 			
 		}*/
-		user.setUserName("13760697997");
+//		user.setUserName("13760697997");
+		Page<User> page=userService.fingPage(new Page<User>(request,response,5), user);
+		System.out.println(page);
+		System.out.println(page.getList());
+		model.addAttribute("page", page);
 		model.addAttribute("user", user);
 		model.addAttribute("productName", Global.getConfig("productName"));
 		return WebSite.getFrontTemplate("test/test");

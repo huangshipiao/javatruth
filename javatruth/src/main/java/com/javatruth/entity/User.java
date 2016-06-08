@@ -8,5 +8,5 @@ public class User extends BaseUser {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-    
+
 }
