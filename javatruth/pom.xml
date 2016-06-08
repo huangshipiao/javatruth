@@ -202,6 +202,12 @@
 			<version>17.0</version>
 		</dependency>
 		
+		<!-- http://mvnrepository.com/artifact/org.json/org.json -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>org.json</artifactId>
+		    <version>chargebee-1.0</version>
+		</dependency>
   </dependencies>
   <build>
     <finalName>javatruth</finalName>
