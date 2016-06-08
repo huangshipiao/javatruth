@@ -8,9 +8,54 @@
 <body>
 	
 	<h1>你好，Java 之 道 ！！！</h1>
-	${user.userName!'123'}
-	<input class="btn btn-lg btn-primary" type="button" value="btn-primary" />
+	${user.userName!'123'}	
+   <form id="form1" class="form-horizontal" >
+      <div class="control-group">
+        <label class="control-label" for="inputEmail">新增数量</label>
+        <div class="controls">
+          <input type="text" id="num" placeholder="新增数量">
+        </div>
+      </div>      
+      <div class="control-group">
+        <div class="controls">
+          
+          <button type="button" id="submit" class="btn" >新增</button>
+        </div>
+      </div>
+    </form>
+	
 <script type='text/javascript' src='${request.contextPath}/res/plugins/jquery/jquery-1.12.4.js'></script>
 <script type='text/javascript' src='${request.contextPath}/res/plugins/bootstrap_3.3.6/js/bootstrap.js'></script>
+<script type="text/javascript">
+$("#submit").on("click",function(){
+	addUser();
+});
+function addUser(){
+	var num=$("#num").val();
+	
+	$.ajax({
+		type : "POST",
+		data :{"num":num},
+		dataType : "json",
+		async : false,
+		url : "add.do",
+		success : function(ajaxResult) {
+			if (ajaxResult.status == "1") {
+				alert(ajaxResult.msg);				
+			} else {
+				alert(ajaxResult.msg);
+				flag = false;						
+				if (ajaxResult.status == "2"){
+					window.location.href=ajaxResult.url;
+				}
+			}
+		},
+		error : function() {
+			flag = false;
+		}
+	});	
+}
+	
+</script>
 </body>
 </html>

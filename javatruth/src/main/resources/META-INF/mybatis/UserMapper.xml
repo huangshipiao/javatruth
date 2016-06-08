@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.javatruth.dao.UserDao">
+<mapper namespace="com.javatruth.dao.IUserDao">
   <resultMap id="BaseResultMap" type="com.javatruth.entity.User">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
@@ -33,13 +33,13 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.javatruth.entity.User">
-    insert into t_user (id, user_name, nick_name, 
+    insert into t_user (user_name, nick_name, 
       user_pwd, status, email, 
       mobile, user_type, head_img, 
       sex, create_time, last_login, 
       last_ip, login_num, upate_time
       )
-    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+    values (#{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
       #{userPwd,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{headImg,jdbcType=VARCHAR}, 
       #{sex,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{lastLogin,jdbcType=TIMESTAMP}, 

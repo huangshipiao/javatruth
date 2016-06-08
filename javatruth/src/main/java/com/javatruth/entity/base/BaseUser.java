@@ -114,7 +114,7 @@ public class BaseUser implements Serializable{
     public Integer getSex() {
         return sex;
     }
-
+    
     public void setSex(Integer sex) {
         this.sex = sex;
     }
