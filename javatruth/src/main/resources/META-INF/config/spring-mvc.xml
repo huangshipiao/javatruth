@@ -36,7 +36,7 @@
 				<prop key="time_format">HH:mm:ss</prop>
 				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
 				<prop key="number_format">#</prop><!-- 设置数字格式 以免出现 000.00 -->
-				<prop key="classic_compatible">true</prop><!-- 可以满足一般需要。默认情况变量为null则替换为空字符串，如果需要自定义，写上${empty!"EmptyValue 
+				<prop key="classic_compatible">false</prop><!-- true:可以满足一般需要。默认情况变量为null则替换为空字符串，如果需要自定义，写上${empty!"EmptyValue 
 					of fbysss"}的形式即可 -->
 				<prop key="template_exception_handler">html_debug</prop><!-- ignore,debug,html_debug,rethrow -->
 			</props>
