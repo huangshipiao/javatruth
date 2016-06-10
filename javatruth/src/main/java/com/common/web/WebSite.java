@@ -41,12 +41,12 @@ public class WebSite {
 		if(path.contains("redirect:")){
 			return path;
 		}
-		StringBuilder sbuider = new StringBuilder();
+		StringBuilder sbuider = new StringBuilder("/");
 		sbuider.append(WEBINF_BASE).append("/").append(PAGES_BASE).append("/").append(ADMIN_BASE);
 		if (path.startsWith("/")) {
 			sbuider.append(path.substring(1)).append(TPL_SUFFIX);
 		} else {
-			sbuider.append(path).append(TPL_SUFFIX);
+			sbuider.append("/").append(path).append(TPL_SUFFIX);
 		}
 		return sbuider.toString();
 	}
@@ -90,12 +90,12 @@ public class WebSite {
 		if(path.contains("redirect:")){
 			return path;
 		}
-		StringBuilder sbuider = new StringBuilder();
+		StringBuilder sbuider = new StringBuilder("/");
 		sbuider.append(WEBINF_BASE).append("/").append(PAGES_BASE).append("/").append(WEBAPP_BASE);
 		if (path.startsWith("/")) {
 			sbuider.append(path.substring(1)).append(TPL_SUFFIX);
 		} else {
-			sbuider.append(path).append(TPL_SUFFIX);
+			sbuider.append("/").append(path).append(TPL_SUFFIX);
 		}
 		return sbuider.toString();
 	}
@@ -117,12 +117,12 @@ public class WebSite {
 		if(path.contains("redirect:")){
 			return path;
 		}
-		StringBuilder sbuider = new StringBuilder();
+		StringBuilder sbuider = new StringBuilder("/");
 		sbuider.append(WEBINF_BASE).append("/").append(PAGES_BASE).append("/").append(MOBILE_BASE);
 		if (path.startsWith("/")) {
 			sbuider.append(path.substring(1)).append(TPL_SUFFIX);
 		} else {
-			sbuider.append(path).append(TPL_SUFFIX);
+			sbuider.append("/").append(path).append(TPL_SUFFIX);
 		}
 		return sbuider.toString();
 	}
