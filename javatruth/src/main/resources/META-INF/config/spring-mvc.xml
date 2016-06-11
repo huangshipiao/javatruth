@@ -9,9 +9,8 @@
                         http://www.springframework.org/schema/context/spring-context-3.1.xsd  
                         http://www.springframework.org/schema/mvc  
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
-                        
-    
-	
+	<!-- 加载配置属性文件 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath:javatruth.properties" />
 	<!-- 配置freeMarker的模板路径 -->
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -19,8 +18,8 @@
 		<property name="freemarkerVariables">
 			<map>
 				<entry key="xml_escape" value-ref="fmXmlEscape" />
-				<entry key="webRoot" value="${webRoot}"></entry>
-				<entry key="jsRoot" value="${jsRoot}"></entry>
+				<entry key="webRoot" value="/WEB-INF/pages/**"></entry>
+				<entry key="jsRoot" value="/res/**"></entry>
 			</map>
 		</property>
 		<!-- FreeMarker默认每隔5秒检查模板是否被更新，如果已经更新了，就会重新加载并分析模板。 但经常检查模板是否更新可能比较耗时。如果你的应用运行在生产模式下，而且你预期模板不会经常更新， 
@@ -106,5 +105,48 @@
         <!-- 内存中的最大值 -->
         <property name="maxInMemorySize" value="40960" />  
     </bean> 
+	
+		
+	<!-- 拦截器配置，拦截顺序：先执行后定义的，排在第一位的最后执行。-->
+	<mvc:interceptors>
+		<!--后台路径登录拦截器  -->
+		<mvc:interceptor>			
+			<mvc:mapping path="${adminPath}/**" />
+			<mvc:exclude-mapping path="${adminPath}/login*"/>		
+			<bean class="com.common.web.interceptor.AdminContextInterceptor" />
+		</mvc:interceptor>
+		<!-- 前台路径登录拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="${frontPath}/usercenter/**" />	
+			<bean class="com.common.web.interceptor.FrontContextInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!--缓存--><!-- 引用ehCache的配置 -->
+	<bean id="cacheManager" class="com.common.web.WebEhCacheManagerFacotryBean">
+		<!-- <property name="configLocation">
+			<value>classpath:ehcache-application.xml</value>
+		</property>
+		<property name="diskStoreLocation">
+			<value>/WEB-INF/cache/application</value>
+		</property> -->
+	</bean>
+	<!--SESSION缓存-->
+	<bean id="ehSessionCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<qualifier value="session"/>
+		<property name="cacheManager">
+			<ref local="cacheManager"/>
+		</property>
+		<property name="cacheName">
+			<value>com.zjht.youoil.common.web.session.Session</value>
+		</property>
+	</bean>
+	<!--HttpSession	-->
+	<bean id="sessionProvider" class="com.common.web.session.HttpSessionProvider"/>
+	<!--Ehcache缓存-->
+	<bean id="sessionCache" class="com.common.web.session.cache.EhcacheSessionCache">
+		<property name="cache" ref="ehSessionCache"/>
+	</bean>
+	<!--SessionId生成器-->
+	<bean id="sessionIdGenerator" class="com.common.web.session.id.JdkUUIDGenerator"/>
 	
 </beans>

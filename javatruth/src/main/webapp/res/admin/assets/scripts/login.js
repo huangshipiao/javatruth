@@ -19,10 +19,10 @@ var Login = function () {
 
 	            messages: {
 	                username: {
-	                    required: "Username is required1."
+	                    required: "请输入用户名."
 	                },
 	                password: {
-	                    required: "Password is required2."
+	                    required: "请输入登录密码."
 	                }
 	            },
 
@@ -74,7 +74,7 @@ var Login = function () {
 
 	            messages: {
 	                email: {
-	                    required: "Email is required."
+	                    required: "请输入Email地址."
 	                }
 	            },
 
