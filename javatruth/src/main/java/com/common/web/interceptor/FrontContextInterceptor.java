@@ -1,17 +1,12 @@
 package com.common.web.interceptor;
 
-import java.util.Locale;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.LocaleEditor;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.common.config.Global;
 import com.common.web.Constants;
@@ -19,7 +14,7 @@ import com.common.web.session.SessionProvider;
 import com.common.web.threadvariable.MemberThread;
 import com.javatruth.entity.User;
 
-public class FrontLocaleInterceptor extends HandlerInterceptorAdapter {
+public class FrontContextInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler)
