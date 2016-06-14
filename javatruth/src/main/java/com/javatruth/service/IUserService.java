@@ -17,4 +17,10 @@ public interface IUserService {
     int updateByPrimaryKey(User record);
     
     Page<User> fingPage(Page<User> page, User user);
+    /**
+     * 通过用户名查找后台管理员用户
+     * @param username 用户名
+     * @return
+     */
+	User findBySysUserName(String username);
 }

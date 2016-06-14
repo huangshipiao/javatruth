@@ -18,4 +18,13 @@ public interface IUserDao {
     int updateByPrimaryKey(User record);
 
 	List<User> findList(User user);
+	
+	/**
+     * 通过用户名查找用户
+     * @param username 用户名
+     * @return
+     */
+	User findBySysUserName(String userName);
+	
+	
 }

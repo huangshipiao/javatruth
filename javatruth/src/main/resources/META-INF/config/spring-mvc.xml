@@ -11,6 +11,47 @@
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	<!-- 加载配置属性文件 -->
 	<context:property-placeholder ignore-unresolvable="true" location="classpath:javatruth.properties" />
+	
+	<!--缓存--><!-- 引用ehCache的配置 -->
+	<bean id="cacheManager" class="com.common.web.WebEhCacheManagerFacotryBean">
+		<property name="configLocation">
+			<value>classpath:META-INF/config/ehcache-application.xml</value>
+		</property>
+		<property name="diskStoreLocation">
+			<value>/WEB-INF/cache/application</value>
+		</property>
+	</bean>
+	<!--全局缓存--><!-- 定义ehCache的工厂，并设置所使用的Cache name -->
+	<bean id="globalCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<qualifier value="global"/>
+		<property name="cacheManager">
+			<ref local="cacheManager"/>
+		</property>
+		<property name="cacheName">
+			<value>com.common.Global</value>
+		</property>
+	</bean>
+	<!--SESSION缓存-->
+	<bean id="ehSessionCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<qualifier value="session"/>
+		<property name="cacheManager">
+			<ref local="cacheManager"/>
+		</property>
+		<property name="cacheName">
+			<value>com.common.web.session.Session</value>
+		</property>
+	</bean>
+	<!--HttpSession	-->
+	<bean id="sessionProvider" class="com.common.web.session.HttpSessionProvider"/>
+	<!--Ehcache缓存-->
+	<bean id="sessionCache" class="com.common.web.session.cache.EhcacheSessionCache">
+		<property name="cache" ref="ehSessionCache"/>
+	</bean>
+	<!--SessionId生成器-->
+	<bean id="sessionIdGenerator" class="com.common.web.session.id.JdkUUIDGenerator"/>
+	
+	
+	
 	<!-- 配置freeMarker的模板路径 -->
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -121,42 +162,6 @@
 			<bean class="com.common.web.interceptor.FrontContextInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-	<!--缓存--><!-- 引用ehCache的配置 -->
-	<bean id="cacheManager" class="com.common.web.WebEhCacheManagerFacotryBean">
-		<property name="configLocation">
-			<value>classpath:META-INF/config/ehcache-application.xml</value>
-		</property>
-		<property name="diskStoreLocation">
-			<value>/WEB-INF/cache/application</value>
-		</property>
-	</bean>
-	<!--全局缓存--><!-- 定义ehCache的工厂，并设置所使用的Cache name -->
-	<bean id="globalCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
-		<qualifier value="global"/>
-		<property name="cacheManager">
-			<ref local="cacheManager"/>
-		</property>
-		<property name="cacheName">
-			<value>com.common.Global</value>
-		</property>
-	</bean>
-	<!--SESSION缓存-->
-	<bean id="ehSessionCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
-		<qualifier value="session"/>
-		<property name="cacheManager">
-			<ref local="cacheManager"/>
-		</property>
-		<property name="cacheName">
-			<value>com.common.web.session.Session</value>
-		</property>
-	</bean>
-	<!--HttpSession	-->
-	<bean id="sessionProvider" class="com.common.web.session.HttpSessionProvider"/>
-	<!--Ehcache缓存-->
-	<bean id="sessionCache" class="com.common.web.session.cache.EhcacheSessionCache">
-		<property name="cache" ref="ehSessionCache"/>
-	</bean>
-	<!--SessionId生成器-->
-	<bean id="sessionIdGenerator" class="com.common.web.session.id.JdkUUIDGenerator"/>
+	
 	
 </beans>
