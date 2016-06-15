@@ -25,7 +25,7 @@ public class BaseUser extends BaseEntity<User> {
 
     private String mobile;
 
-    private Integer userType;
+    private Integer userType;//用户类型 0普通用户 1后台管理员
 
     private String headImg;
 
