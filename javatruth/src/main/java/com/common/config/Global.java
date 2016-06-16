@@ -86,4 +86,20 @@ public class Global {
 	public static String getUrlSuffix() {
 		return getConfig("urlSuffix");
 	}
+	
+	/**
+	 * 获取后台登录URL
+	 */
+	public static String getAdminLoginUrl(){
+		return getConfig("adminLoginUrl");
+	}
+	
+	/**
+	 * 获取后台登录URL
+	 */
+	public static String getFrontLoginUrl(){
+		return getConfig("frontLoginUrl");
+	}
+	
+	
 }

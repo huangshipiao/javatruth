@@ -73,7 +73,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 				<label class="checkbox">
 				<input type="checkbox" name="remember" value="1"/> 记住我
 				</label>
-				<button type="submit" class="btn green pull-right">
+				<button type="button" id="login"  class="btn green pull-right">
 				登录 <i class="m-icon-swapright m-icon-white"></i>
 				</button>            
 			</div>
@@ -100,7 +100,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 				<button type="button" id="back-btn" class="btn">
 				<i class="m-icon-swapleft"></i> 返回
 				</button>
-				<button type="submit" class="btn green pull-right">
+				<button type="button" id="resetPwd" class="btn green pull-right">
 				提交 <i class="m-icon-swapright m-icon-white"></i>
 				</button>            
 			</div>
@@ -143,10 +143,10 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		  App.init();
 		  Login.init();
 		//参数设置，若用默认值可以省略以下面代
-	     toastr.options = {
+	      toastr.options = {
 	        "closeButton": false, //是否显示关闭按钮
 	        "debug": false, //是否使用debug模式
-	        "positionClass": "toast-bottom-full-width",//弹出窗的位置
+	        "positionClass": "toast-top-full-width",//弹出窗的位置
 	        "showDuration": "300",//显示的动画时间
 	        "hideDuration": "1000",//消失的动画时间
 	        "timeOut": "5000", //展现时间
@@ -155,16 +155,31 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	        "hideEasing": "linear",//消失时的动画缓冲方式
 	        "showMethod": "fadeIn",//显示时的动画方式
 	        "hideMethod": "fadeOut" //消失时的动画方式
-	        };
-	 
+	        };	  
 		}); 
+		$("#login").bind("click",function(){
+			 if ($('.login-form').validate().form()) {
+                $.ajax({
+                	url:$('.login-form').attr("action"),
+                	type:"post",
+                	data:$('.login-form').serialize(),
+                	success:function(data){
+                		if(data.status=="1"){
+                			//toastr.success(data.msg);
+                			window.location.href=data.url
+                		}else{
+                			toastr.error(data.msg);
+                		}
+                	},
+                	error:function(){
+                		toastr.error("系统异常.");
+                	}
+                });
+             }
+		});
+		
 	</script>	
-	<!-- END JAVASCRIPTS -->
-	<#if message??>
-		<script type="text/javascript"/>			
-			toastr.error('${message!}.')
-		</script>
-	</#if>
+	<!-- END JAVASCRIPTS -->	
 </body>
 <!-- END BODY -->
 </html>

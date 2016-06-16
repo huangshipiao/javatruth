@@ -50,8 +50,8 @@ public class AdminContextInterceptor extends HandlerInterceptorAdapter {
 		if (user!=null && mav != null && mav.getModelMap() != null
 				&& mav.getViewName() != null
 				&& !mav.getViewName().startsWith("redirect:")) {
-			mav.getModelMap().addAttribute(Constants.AUTH_KEY,
-					user.getUserName()+user.getId());
+			/*mav.getModelMap().addAttribute(Constants.AUTH_KEY,
+					user.getUserName()+user.getId());*/
 		}else{
 			 response.sendRedirect(loginUrl);
 		}
@@ -66,7 +66,7 @@ public class AdminContextInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
 	private SessionProvider session;
 	
-	private String loginUrl=Global.getConfig("adminLoginUrl");
+	private String loginUrl=Global.getAdminLoginUrl();
 
 	
 }

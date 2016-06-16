@@ -122,4 +122,9 @@ public abstract class Constants {
 	public static final String SESSION_PAY_VERIFYCODE = "session_pay_verifycode";
 	
 	public static final String REQUEST_LOGIN_URL_KEY = "_login_url";
+	
+	/**
+	 * 
+	 */
+	
 }

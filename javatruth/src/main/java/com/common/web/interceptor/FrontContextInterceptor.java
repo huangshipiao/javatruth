@@ -54,5 +54,5 @@ public class FrontContextInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
 	private SessionProvider session;
 	
-	private String loginUrl=Global.getConfig("frontLoginUrl");
+	private String loginUrl=Global.getAdminLoginUrl();
 }

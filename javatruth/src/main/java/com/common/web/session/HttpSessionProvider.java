@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import com.common.web.Constants;
 
 /**
@@ -14,6 +16,7 @@ import com.common.web.Constants;
  * @author huangshipiao
  * 
  */
+
 public class HttpSessionProvider implements SessionProvider {
 	
 	public Serializable getAttribute(HttpServletRequest request, String name) {
