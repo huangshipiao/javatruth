@@ -5,9 +5,12 @@
 	version="3.0">
 	<display-name>Archetype Created Web Application</display-name>
 	<!-- Spring和mybatis的配置文件 -->
-	<context-param>
+	<context-param >	
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:META-INF/config/spring-mybatis.xml</param-value>
+		<param-value>
+			classpath*:META-INF/config/spring-mybatis.xml,
+			classpath*:META-INF/config/message-emailTls.xml
+		</param-value>
 			<!-- META-INF/config/spring-shiro.xml -->
 		
 	</context-param>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-4.0.xsd"> 
+
+	<!-- <util:properties id="message" location="classpath:META-INF/message.properties" /> -->
+	<bean id="message" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"   >
+					<value>classpath:message.properties</value>
+		</property>
+	</bean> 
+	<!-- 加载配置属性文件 -->
+	<!-- <context:property-placeholder ignore-unresolvable="true" location="classpath:message.properties" />  -->
+	
+	<bean id="emailHandler" class="com.common.utils.EmailTlsHandler">
+		<property name="javaMailSender" ref="javaMailSender" />
+		<property name="simpleMailMessage" ref="simpleMailMessage" />
+	</bean>
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.qq.com" />
+		<property name="port" value="587" />
+		<property name="username" value="javatruth@foxmail.com" />
+		<property name="password" value="xsebtxtvqopodade" />
+		<property name="javaMailProperties">
+			<props><!--  gsdgoxiuokbpcjbg -->
+				<prop key="mail.smtp.auth" >true</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from" value="javatruth@foxmail.com" />
+	</bean>
+
+	<!-- <bean id="simpleMail" class="com.zjht.accountcenter.JavaEmailService"> <property name="javaMailSender" 
+		ref="javaMailSender" /> <property name="simpleMailMessage" ref="simpleMailMessage" /> </bean> -->
+
+</beans>

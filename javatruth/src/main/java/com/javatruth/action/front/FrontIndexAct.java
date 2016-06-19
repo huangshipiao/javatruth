@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.utils.CodeBuilder;
+import com.common.utils.EmailTlsHandler;
+import com.common.utils.PropertyUtil;
 import com.common.utils.ResponseUtils;
 import com.common.utils.StringUtils;
 import com.common.web.AjaxResult;
@@ -30,7 +33,8 @@ public class FrontIndexAct {
 	private IUserService userService;
 	@Autowired(required=false)
 	private HttpSessionProvider session;
-	
+	@Autowired
+	private EmailTlsHandler emailTlsHandler;
 	@RequestMapping("index.html")
 	public String frontIndex(HttpServletRequest request,Model model){		
 		return WebSite.getFrontTemplate("index");
@@ -77,12 +81,48 @@ public class FrontIndexAct {
 			} else {				
 				jsonResult.put("status",  AjaxResult.STATUS_FAILED);
 				jsonResult.put("msg", "用户名或密码错误.");		
+				
 			}
 		} else {			
 			jsonResult.put("status", AjaxResult.STATUS_FAILED);
 			jsonResult.put("msg", "对不起！您的账号已被锁定！");					
 		}
+		
+
+		
+		Thread t = new Thread(new Runnable() {
+			public void run() {				
+				emailTlsHandler.sendMail("test", "用户名或密码错误.", "517557384@qq.com", "");				
+			}
+		});
+		t.start();
 		ResponseUtils.renderJson(response, jsonResult.toJSONString());	
 	}
+	
+	@RequestMapping(value = "sendEmailCode.do", method = {RequestMethod.POST})
+	public void sendEmailCode(String email,HttpServletRequest request,HttpServletResponse response,ModelMap model){		
+		JSONObject jsonResult=new JSONObject();
+		if(StringUtils.isBlank(email)){
+			jsonResult.put("status", AjaxResult.STATUS_FAILED);
+			jsonResult.put("msg", "Email不能为空.");
+			ResponseUtils.renderJson(response, jsonResult.toJSONString());	
+			return;
+		}
+		try {
+			String content = PropertyUtil.getMessagesProperty("mail.register.content");
+			content.replace("${code}", CodeBuilder.sixNO());
+			String subject = PropertyUtil.getMessagesProperty("mail.register.subject");
+			emailTlsHandler.sendMail(subject, content, email, "");
+			jsonResult.put("status", AjaxResult.STATUS_SUCCESS);
+			jsonResult.put("msg", "注册码发送成功，请注意查收.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.put("status", AjaxResult.STATUS_FAILED);
+			jsonResult.put("msg", "注册码发送失败，请稍后再试.");
+		}
+		ResponseUtils.renderJson(response, jsonResult.toJSONString());	
+	}
+	
+	
 	
 }
