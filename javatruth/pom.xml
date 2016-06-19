@@ -247,14 +247,14 @@
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			 <version>2.5.1</version>
-		</dependency> 
-		
-		<!-- http://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
+		</dependency> 		
+		<!-- ehcache 缓存-->
 		<dependency>
 		    <groupId>net.sf.ehcache</groupId>
 		    <artifactId>ehcache</artifactId>
 		    <version>1.6.2</version>
-		</dependency>
+		</dependency>		
+		
   </dependencies>
   <build>
     <finalName>javatruth</finalName>

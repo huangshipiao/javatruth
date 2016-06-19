@@ -90,6 +90,5 @@ public class AdminIndexAct {
 					
 		}
 		ResponseUtils.renderJson(response, jsonResult.toJSONString());	
-
 	}
 }

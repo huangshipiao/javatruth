@@ -23,4 +23,10 @@ public interface IUserService {
      * @return
      */
 	User findBySysUserName(String username);
+	/**
+	 * 通过用户名或邮箱或手机号查找用户信息
+	 * @param username  可传入用户名，邮箱 或手机号
+	 * @return
+	 */
+	User findByUserName(String username);
 }

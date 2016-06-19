@@ -12,7 +12,7 @@ public class User extends BaseUser {
 	/**
 	 * 前台用户类型 0
 	 */
-	public static final Integer FRONT_USER_TYPE = 1;
+	public static final Integer FRONT_USER_TYPE = 0;
 	/**
 	 * 后台用户类型 1
 	 */

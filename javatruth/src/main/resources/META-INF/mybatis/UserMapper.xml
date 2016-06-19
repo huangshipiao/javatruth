@@ -278,12 +278,18 @@
     LIMIT 0, 1;
   </select>
   
-  <select id="findByFrontUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="findByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_user
-    where user_name = #{userName}
-    AND user_type=0
+    where user_type=0 
+    AND (
+    	  user_name = #{userName}
+    	  OR 
+    	  mobile=#{userName}
+    	  OR
+    	  email=#{userName}
+    	 )
     LIMIT 0, 1;
   </select>
   

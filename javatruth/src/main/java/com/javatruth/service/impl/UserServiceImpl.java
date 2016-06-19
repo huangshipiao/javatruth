@@ -54,5 +54,9 @@ public class UserServiceImpl implements IUserService {
 	public User findBySysUserName(String username) {		
 		return userDao.findBySysUserName(username);
 	}
+
+	public User findByUserName(String username) {		
+		return userDao.findByUserName(username);
+	}
 	
 }
