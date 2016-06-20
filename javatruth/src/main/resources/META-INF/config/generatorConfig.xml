@@ -17,7 +17,7 @@
                         connectionURL="jdbc:mysql://localhost:3306/android" userId="root"
                         password="123456"/>
 		<!--指定生成“entity实体类”的具体位置  -->
-        <javaModelGenerator targetPackage="com.javatruth.entity.base"
+        <javaModelGenerator targetPackage="com.javatruth.entity"
                             targetProject="E:/generator">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
@@ -38,7 +38,7 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>-->
 
-        <table tableName="t_admin_log" domainObjectName="AdminLog"
+        <table tableName="t_mobile_verify" domainObjectName="MobileVerify"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
