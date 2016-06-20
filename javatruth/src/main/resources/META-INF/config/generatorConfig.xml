@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!--a) 因为生成过程中需要连接db，所以指定了驱动jar包的位置-->
+    <classPathEntry
+            location="F:\JAVA\repository\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar"/>
+    <context id="my" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="false"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+		<!--JDBC数据库行为连接字符串  -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/android" userId="root"
+                        password="123456"/>
+		<!--指定生成“entity实体类”的具体位置  -->
+        <javaModelGenerator targetPackage="com.javatruth.entity.base"
+                            targetProject="E:/generator">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+		<!--指定生成“mybatis映射xml文件”的具体位置  -->
+        <sqlMapGenerator targetPackage="com.javatruth.entity.xml"
+                         targetProject="E:/generator">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+		<!--指定生成“mapper接口”的具体位置  -->
+        <javaClientGenerator targetPackage="com.javatruth.dao"
+                             targetProject="E:/generator" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--<table tableName="T_FEE_AGTBILL" domainObjectName="FeeAgentBill"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>-->
+
+        <table tableName="t_admin_log" domainObjectName="AdminLog"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!--<columnRenamingRule searchString="^D_"
+                                replaceString=""/>-->
+        </table>
+
+    </context>
+</generatorConfiguration>
