@@ -50,12 +50,24 @@ public class FrontIndexAct {
 		return WebSite.getFrontTemplate("index");
 	}
 	
-	
+	/**
+	 * 登录页面
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "login.html", method = RequestMethod.GET)
 	public String toLogin(HttpServletRequest request,Model model){		
 		return WebSite.getFrontTemplate("login");
 	}
-	
+	/**
+	 * 登录方法
+	 * @param username
+	 * @param password
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
 	@RequestMapping(value = "login.do", method = {RequestMethod.POST})
 	public void login(String username,String password,HttpServletRequest request,HttpServletResponse response,ModelMap model){		
 		JSONObject jsonResult=new JSONObject();
@@ -100,15 +112,51 @@ public class FrontIndexAct {
 		
 
 		
-		Thread t = new Thread(new Runnable() {
+		/*Thread t = new Thread(new Runnable() {
 			public void run() {				
 				emailTlsHandler.sendMail("test", "用户名或密码错误.", "517557384@qq.com", "");				
 			}
 		});
-		t.start();
+		t.start();*/
 		ResponseUtils.renderJson(response, jsonResult.toJSONString());	
 	}
 	
+	/**
+	 * 用户注册方法
+	 * @param user
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping(value="register.do",method={RequestMethod.POST})
+	public void register(String safecode,String email,String mobile,String userName,String nickName,Integer sex,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		JSONObject jsonResult=new JSONObject();
+		HttpSession session = request.getSession();
+		if (session.getAttribute("validateCode") == null || !((String) session.getAttribute( "validateCode")).equalsIgnoreCase(safecode)){
+			jsonResult.put("status", AjaxResult.STATUS_FAILED);
+			jsonResult.put("msg", "图形验证码错误.");
+			ResponseUtils.renderJson(response, jsonResult.toJSONString());	
+			return;
+		}
+		
+		String content=PropertyUtil.getMessagesProperty("mail.register.content");
+		content.replace("{username}", userName).replace("{url}", getResiterUrl(userName,email));
+		emailTlsHandler.sendMail(PropertyUtil.getMessagesProperty("mail.register.title"), content, email, "");
+		ResponseUtils.renderJson(response, jsonResult.toJSONString());	
+	}
+	
+	public String getResiterUrl(String userName,String email){
+		
+		return "";
+	}
+	
+	/**
+	 * 发送邮箱注册验证码
+	 * @param email
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
 	@RequestMapping(value = "sendEmailCode.do", method = {RequestMethod.POST})
 	public void sendEmailCode(String email,HttpServletRequest request,HttpServletResponse response,ModelMap model){		
 		JSONObject jsonResult=new JSONObject();
@@ -133,14 +181,13 @@ public class FrontIndexAct {
 		ResponseUtils.renderJson(response, jsonResult.toJSONString());	
 	}
 	
-	
 	/**
 	 * 图片验证码
 	 * @param request
 	 * @param response
 	 * @param model
 	 */
-	@RequestMapping(value = "/register/random.do", method = RequestMethod.GET)
+	@RequestMapping(value = "random.do", method = RequestMethod.GET)
 	public void random(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		try {
 			int width = 50;
@@ -200,8 +247,8 @@ public class FrontIndexAct {
 		}
 		return;
 	}
-
-	private Color getRandColor(int fc, int bc) { // 给定范围获得随机颜色
+	// 给定范围获得随机颜色
+	private Color getRandColor(int fc, int bc) { 
 		Random random = new Random();
 		if (fc > 255)
 			fc = 255;
