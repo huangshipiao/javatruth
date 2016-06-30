@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.config.Global;
 import com.common.utils.CodeBuilder;
 import com.common.utils.EmailTlsHandler;
 import com.common.utils.PropertyUtil;
@@ -128,26 +129,43 @@ public class FrontIndexAct {
 	 * @param response
 	 * @param model
 	 */
-	@RequestMapping(value="register.do",method={RequestMethod.POST})
+	@RequestMapping(value="register.do",method={RequestMethod.POST,RequestMethod.GET})
 	public void register(String safecode,String email,String mobile,String userName,String nickName,Integer sex,HttpServletRequest request,HttpServletResponse response,ModelMap model){
 		JSONObject jsonResult=new JSONObject();
 		HttpSession session = request.getSession();
-		if (session.getAttribute("validateCode") == null || !((String) session.getAttribute( "validateCode")).equalsIgnoreCase(safecode)){
+		/*if (session.getAttribute("validateCode") == null || !((String) session.getAttribute( "validateCode")).equalsIgnoreCase(safecode)){
 			jsonResult.put("status", AjaxResult.STATUS_FAILED);
 			jsonResult.put("msg", "图形验证码错误.");
 			ResponseUtils.renderJson(response, jsonResult.toJSONString());	
 			return;
+		}*/
+		try {			
+			//获取激活邮件的内容，包含激活邮件地址
+			String content = getActiveEmail(userName, email);
+			//发送激活邮件
+			emailTlsHandler.sendMail(PropertyUtil.getMessagesProperty("mail.register.title"), content, email, "");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.put("status", AjaxResult.STATUS_FAILED);
+			jsonResult.put("msg", "注册失败.");
 		}
-		
-		String content=PropertyUtil.getMessagesProperty("mail.register.content");
-		content.replace("{username}", userName).replace("{url}", getResiterUrl(userName,email));
-		emailTlsHandler.sendMail(PropertyUtil.getMessagesProperty("mail.register.title"), content, email, "");
 		ResponseUtils.renderJson(response, jsonResult.toJSONString());	
 	}
-	
-	public String getResiterUrl(String userName,String email){
-		
-		return "";
+	/**
+	 * 激活邮件
+	 * @param userName
+	 * @param email
+	 * @return
+	 */
+	public String getActiveEmail(String userName,String email){
+		//先将用户名和email 使用MD5加密
+		String md5Hex1=DigestUtils.md5Hex(userName+email);
+		//再将该加密串加自定义加密字符串进行 再次MD5加密
+		String activeCode=DigestUtils.md5Hex(md5Hex1+Global.getConfig("registerKey"));
+		//最终得到该加密串用于验证用户的注册激活地址
+		String activeUrl=PropertyUtil.getMessagesProperty("mail.active.url").replace("${activeCode}", activeCode).replace("${username}", userName);
+		String content=PropertyUtil.getMessagesProperty("mail.register.content").replace("${username}", userName).replace("${activeUrl}", activeUrl);
+		return content;
 	}
 	
 	/**
